@@ -21,3 +21,6 @@
   (let [colors (random-colors (keys color-to-hex) n)]
     {:color-to-hex (select-keys color-to-hex colors)
      :key-color (rand-nth colors)}))
+
+(defn create-random-game []
+  (create-game (inc (rand-int (count color-to-hex)))))
