@@ -4,16 +4,16 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.89" :scope "provided"]
+  :dependencies [[bk/ring-gzip "0.1.1"]
                  [com.cognitect/transit-clj "0.8.285"]
-                 [ring "1.4.0"]
-                 [ring/ring-defaults "0.2.0"]
-                 [bk/ring-gzip "0.1.1"]
-                 [ring.middleware.logger "0.5.0"]
                  [compojure "1.5.0"]
                  [environ "1.0.3"]
-                 [org.omcljs/om "1.0.0-alpha36"]]
+                 [org.clojure/clojure "1.8.0"]
+                 [org.clojure/clojurescript "1.9.89" :scope "provided"]
+                 [org.omcljs/om "1.0.0-alpha36"]
+                 [ring "1.4.0"]
+                 [ring.middleware.logger "0.5.0"]
+                 [ring/ring-defaults "0.2.0"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-environ "1.0.3"]]
@@ -103,9 +103,9 @@
   :doo {:build "test"}
 
   :profiles {:dev
-             {:dependencies [[figwheel "0.5.4-4"]
+             {:dependencies [[com.cemerick/piggieback "0.2.1"]
+                             [figwheel "0.5.4-4"]
                              [figwheel-sidecar "0.5.4-4"]
-                             [com.cemerick/piggieback "0.2.1"]
                              [org.clojure/tools.nrepl "0.2.12"]]
 
               :plugins [[lein-figwheel "0.5.4-4"]
