@@ -1,7 +1,7 @@
 (ns user
-  (:require [rainbow.server]
-            [ring.middleware.reload :refer [wrap-reload]]
-            [figwheel-sidecar.repl-api :as figwheel]))
+  (:require [figwheel-sidecar.repl-api :as figwheel]
+            rainbow.server
+            [ring.middleware.reload :refer [wrap-reload]]))
 
 ;; Let Clojure warn you when it needs to reflect on types, or when it does math
 ;; on unboxed numbers. In both cases you should add type annotations to prevent

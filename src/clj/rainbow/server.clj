@@ -1,13 +1,15 @@
 (ns rainbow.server
+  (:gen-class)
   (:require [clojure.java.io :as io]
-            [compojure.core :refer [ANY GET PUT POST DELETE defroutes]]
-            [compojure.route :refer [resources]]
-            [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
-            [ring.middleware.gzip :refer [wrap-gzip]]
-            [ring.middleware.logger :refer [wrap-with-logger]]
+            [compojure
+             [core :refer [defroutes GET]]
+             [route :refer [resources]]]
             [environ.core :refer [env]]
-            [ring.adapter.jetty :refer [run-jetty]])
-  (:gen-class))
+            [ring.adapter.jetty :refer [run-jetty]]
+            [ring.middleware
+             [defaults :refer [api-defaults wrap-defaults]]
+             [gzip :refer [wrap-gzip]]
+             [logger :refer [wrap-with-logger]]]))
 
 (defroutes routes
   (GET "/" _
