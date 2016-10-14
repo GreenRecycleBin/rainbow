@@ -24,3 +24,9 @@
 
 (defn create-random-game []
   (create-game (inc (rand-int (count color-to-hex)))))
+
+(defn check-selected-color [game color]
+  (let [{:keys [key-color]} game]
+    (if (= key-color color)
+      (create-random-game)
+      game)))

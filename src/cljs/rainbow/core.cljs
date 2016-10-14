@@ -16,17 +16,21 @@
    (dom/div #js {:id "key-color" :className "container"}
             (str/capitalize (name color)))))
 
-(defn color-component [[color hex]]
+(defn send-selected-color [color ch]
+  #(go
+     (>! ch color)))
+
+(defn color-component [[color hex ch]]
   (om/component
    (dom/div #js {:className (name color)
                  :style #js {:backgroundColor hex}
-                 :onClick #(js/console.log (name color))})))
+                 :onClick (send-selected-color color ch)})))
 
-(defn colors-component [color-to-hex]
+(defn colors-component [[color-to-hex ch]]
   (om/component
    (apply
     dom/div #js {:id "colors" :className "container"}
-    (om/build-all color-component color-to-hex))))
+    (om/build-all color-component (map #(conj % ch) color-to-hex)))))
 
 (defn game-component [app-state owner]
   (reify
@@ -39,7 +43,8 @@
 
                (when-let [{:keys [color-to-hex]} app-state]
                  (when color-to-hex
-                   (om/build colors-component (seq color-to-hex))))))))
+                   (om/build colors-component
+                             [(seq color-to-hex) (:ch app-state)])))))))
 
 (defn render-game [container]
   (om/root #'game-component app-state {:target container}))
@@ -50,6 +55,8 @@
   (go
     (let [{:keys [ws-channel error]} (<! (:ch @app-state))]
       (when error (throw error))
+
+      (reset! app-state {:ch ws-channel})
 
       (loop []
         (when-let [game (:message (<! ws-channel))]
