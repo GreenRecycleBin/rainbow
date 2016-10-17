@@ -16,6 +16,18 @@
    (dom/div #js {:id "key-color" :className "container"}
             (str/capitalize (name color)))))
 
+(defn timer-component [time]
+  (om/component (dom/div #js {:id "timer"} time)))
+
+(defn info-component [[key-color time]]
+  (om/component
+   (dom/div #js {:id "info" :className "container"}
+            (when key-color
+              (om/build key-color-component key-color))
+
+            (when time
+              (om/build timer-component time)))))
+
 (defn send-selected-color [color ch]
   #(go
      (>! ch color)))
@@ -37,9 +49,8 @@
     om/IRender
     (render [_]
       (dom/div #js {:id "board" :className "container"}
-               (let [{:keys [key-color]} app-state]
-                 (when key-color
-                   (om/build key-color-component key-color)))
+               (om/build info-component
+                         [(:key-color app-state) (:time app-state)])
 
                (when-let [{:keys [color-to-hex]} app-state]
                  (when color-to-hex

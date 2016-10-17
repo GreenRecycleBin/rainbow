@@ -15,9 +15,19 @@ body {
     height: 100%;
 }
 
-#key-color {
-    justify-content: center;
+#info {
+    justify-content: flex-end;
     font-size: 30px;
+}
+
+#key-color {
+    flex: auto;
+    justify-content: center;
+}
+
+#timer {
+    color: green;
+    font-weight: bold;
 }
 
 #colors {
